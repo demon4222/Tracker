@@ -23,19 +23,19 @@ class CreateTasksTable extends Migration
             $table->integer('type_id')->unsigned();
             $table->integer('priority_id')->unsigned();
             $table->string('name');
-            $table->mediumText('description');
+            $table->text('description');
             $table->integer('estimation')->unsigned();
             $table->integer('spent_time')->unsigned();
             $table->boolean('is_done')->nullable();
             $table->timestamps();
 
             $table->foreign('parent_id')->references('id')->on('tasks')->onDelete('cascade');
-            $table->foreign('project_id')->references('id')->on('projects')->onDelete('cascade');
-            $table->foreign('creator_id')->references('id')->on('users')->onDelete('cascade');
-            $table->foreign('assigned_to_id')->references('id')->on('users')->onDelete('cascade');
-            $table->foreign('state_id')->references('id')->on('states')->onDelete('cascade');
-            $table->foreign('type_id')->references('id')->on('types')->onDelete('cascade');
-            $table->foreign('priority_id')->references('id')->on('priorities')->onDelete('cascade');
+            $table->foreign('project_id')->references('id')->on('projects')->onDelete('restrict');
+            $table->foreign('creator_id')->references('id')->on('users')->onDelete('restrict');
+            $table->foreign('assigned_to_id')->references('id')->on('users')->onDelete('restrict');
+            $table->foreign('state_id')->references('id')->on('states')->onDelete('restrict');
+            $table->foreign('type_id')->references('id')->on('types')->onDelete('restrict');
+            $table->foreign('priority_id')->references('id')->on('priorities')->onDelete('restrict');
         });
     }
 

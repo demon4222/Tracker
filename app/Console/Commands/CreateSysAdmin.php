@@ -12,24 +12,14 @@ class CreateSysAdmin extends Command
      *
      * @var string
      */
-    protected $signature = 'sysAdmin:create {mail} {pass}';
+    protected $signature = 'sysadmin:create {name} {email} {pass}';
 
     /**
      * The console command description.
      *
      * @var string
      */
-    protected $description = 'Creating new super admin';
-
-    /**
-     * Create a new command instance.
-     *
-     * @return void
-     */
-    public function __construct()
-    {
-        parent::__construct();
-    }
+    protected $description = 'Creating new system admin';
 
     /**
      * Execute the console command.
@@ -38,12 +28,13 @@ class CreateSysAdmin extends Command
      */
     public function handle()
     {
-        $mail = $this->argument('mail');
+        $name = $this->argument('name');
+        $email = $this->argument('email');
         $password = $this->argument('pass');
         DB::table('users')->insert([
             'name' => "admin",
-            'email' => "$mail",
-            'password' => bcrypt("$password"),
+            'email' => $email,
+            'password' => bcrypt($password),
             'is_admin' => 1
         ]);
     }

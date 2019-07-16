@@ -16,25 +16,8 @@ class CreateStatesTable extends Migration
         Schema::create('states', function (Blueprint $table) {
             $table->increments('id');
             $table->string('name');
+            $table->boolean('is_resolved')->default(0);
         });
-        DB::table('states')->insert([
-            'name' => 'open'
-        ]);
-        DB::table('states')->insert([
-            'name' => 'closed'
-        ]);
-        DB::table('states')->insert([
-            'name' => 'need more info'
-        ]);
-        DB::table('states')->insert([
-            'name' => 'cannot reproduce'
-        ]);
-        DB::table('states')->insert([
-            'name' => 'fixed'
-        ]);
-        DB::table('states')->insert([
-            'name' => 'done'
-        ]);
     }
 
     /**
