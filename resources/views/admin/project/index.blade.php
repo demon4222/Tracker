@@ -23,7 +23,12 @@
                     <td>
                         <ul>
                             @foreach($project->users as $user)
-                                <li>{{$user->name}} <button class="btn btn-sm btn-danger">-</button></li>
+                                <li>{{$user->name}}</li>
+                                <form action="{{action('Admin\ProjectController@removeUserFromProject', [$project, $user])}}" method="POST">
+                                    @csrf
+                                    @method('DELETE')
+                                    <button type="submit" class="btn btn-sm btn-danger">-</button>
+                                </form>
                             @endforeach
                                 <button class="btn btn-sm btn-success">+</button>
                         </ul>

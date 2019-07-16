@@ -32,7 +32,7 @@ class CreateSysAdmin extends Command
         $email = $this->argument('email');
         $password = $this->argument('pass');
         DB::table('users')->insert([
-            'name' => "admin",
+            'name' => $name,
             'email' => $email,
             'password' => bcrypt($password),
             'is_admin' => 1

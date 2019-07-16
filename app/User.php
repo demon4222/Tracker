@@ -2,14 +2,16 @@
 
 namespace App;
 
+use App\Models\Project;
+use App\Models\ProjectUser;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 
 class User extends Authenticatable
 {
-    const PROJECT_ADMIN = 1;
-    const DEVELOPER = 2;
+    const ROLE_PROJECT_ADMIN = 1;
+    const ROLE_DEVELOPER = 2;
     use Notifiable;
 
     /**
@@ -38,4 +40,14 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    public function projects()
+    {
+        return $this->belongsToMany(Project::class);
+    }
+
+    public function projectUser()
+    {
+        return $this->belongsTo(ProjectUser::class);
+    }
 }

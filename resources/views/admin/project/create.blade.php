@@ -3,21 +3,24 @@
 @section('content')
     <div class="card">
         <div class="card-header">
-            <h4>Новый проект</h4>
+            <h4>@lang('Новый проект')</h4>
         </div>
         <div class="card-body">
             <form action="{{action('Admin\ProjectController@store')}}" method="POST">
                 @csrf
-                <div class="form-group">
-                    <label>Название проекта</label>
-                    <input name="name" type="text" class="form-control">
-                </div>
+                @component('components.inputName',[
+                    'labelName' => 'Название проекта',
+                    'name' => 'name',
+                    'type' => 'text'
+                ])
+                @endcomponent
 
-                <div class="form-group">
-                    <label>Описание</label>
-                    <textarea name="description" class="form-control" rows="6"></textarea>
-                </div>
-                <button type="submit" class="btn btn-success">Создать</button>
+                @component('components.textarea',[
+                    'labelName' => 'Описание',
+                    'name' => 'description'
+                ])
+                @endcomponent
+                <button type="submit" class="btn btn-success">@lang('Создать')</button>
             </form>
         </div>
     </div>
