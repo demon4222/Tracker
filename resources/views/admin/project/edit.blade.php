@@ -10,15 +10,15 @@
                 @csrf
                 @method('PATCH')
                 <div class="form-group">
-                    <label>Название проекта</label>
+                    <label>@lang('Название проекта')</label>
                     <input name="name" value="{{$project->name}}" type="text" class="form-control">
                 </div>
 
                 <div class="form-group">
-                    <label>Описание</label>
+                    <label>@lang('Описание')</label>
                     <textarea name="description" class="form-control" rows="6">{{$project->description}}</textarea>
                 </div>
-                <button type="submit" class="btn btn-success">Обновить</button>
+                <button type="submit" class="btn btn-success">@lang('Обновить')</button>
             </form>
         </div>
     </div>

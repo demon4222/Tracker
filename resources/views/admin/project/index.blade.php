@@ -8,10 +8,10 @@
         <table class="table">
             <thead>
             <tr>
-                <th scope="col">Название</th>
-                <th scope="col">Исполнители</th>
-                <th scope="col">Создан</th>
-                <th scope="col">Действие</th>
+                <th scope="col">@lang('Название')</th>
+                <th scope="col">@lang('Исполнители')</th>
+                <th scope="col">@lang('Создан')</th>
+                <th scope="col">@lang('Действие')</th>
             </tr>
             </thead>
             <tbody>
@@ -39,10 +39,10 @@
                               method="POST">
                             @csrf
                             @method('delete')
-                            <input type="submit" class="btn btn-sm btn-danger" value="Удалить">
+                            <input type="submit" class="btn btn-sm btn-danger" value="@lang('Удалить')">
                         </form>
                         <form action="{{action('Admin\ProjectController@edit', $project)}}" method="GET">
-                            <input type="submit" class="btn btn-sm btn-primary" value="Редактировать">
+                            <input type="submit" class="btn btn-sm btn-primary" value="@lang('Редактировать')">
                         </form>
                     </td>
                 </tr>
