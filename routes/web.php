@@ -14,3 +14,12 @@
 Route::get('/', function () {
     return view('welcome');
 });
+
+Auth::routes();
+
+Route::group(['middleware'=>'auth'], function(){
+    Route::group(['prefix'=>'admin', 'namespace' => 'Admin'], function (){
+        Route::resource('/projects', 'ProjectController');
+        Route::delete('/projects/{projectId}/removeUser/{userId}', 'ProjectController@removeUserFromProject');
+    });
+});
