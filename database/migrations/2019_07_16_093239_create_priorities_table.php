@@ -17,6 +17,7 @@ class CreatePrioritiesTable extends Migration
             $table->increments('id');
             $table->string('name');
             $table->integer('weight');
+            $table->softDeletes();
         });
     }
 

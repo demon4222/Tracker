@@ -4,6 +4,7 @@ namespace App;
 
 use App\Models\Project;
 use App\Models\ProjectUser;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -12,8 +13,9 @@ class User extends Authenticatable
 {
     const ROLE_PROJECT_ADMIN = 1;
     const ROLE_DEVELOPER = 2;
-    use Notifiable;
 
+    use Notifiable;
+    use SoftDeletes;
     /**
      * The attributes that are mass assignable.
      *

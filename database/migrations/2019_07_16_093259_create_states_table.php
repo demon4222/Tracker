@@ -17,6 +17,7 @@ class CreateStatesTable extends Migration
             $table->increments('id');
             $table->string('name');
             $table->boolean('is_resolved')->default(0);
+            $table->softDeletes();
         });
     }
 

@@ -77,6 +77,9 @@
     </nav>
 
     <main class="py-4">
+        @if (Session::has('alert'))
+            <div class="alert alert-info">@lang(Session::get('alert'))</div>
+        @endif
         <div class="container">
             @yield('content')
         </div>

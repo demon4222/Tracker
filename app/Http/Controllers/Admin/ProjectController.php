@@ -10,7 +10,6 @@ use App\Models\ProjectUser;
 
 class ProjectController extends Controller
 {
-    private $perpage = 20;
     /**
      * Display a listing of the resource.
      *
@@ -18,7 +17,8 @@ class ProjectController extends Controller
      */
     public function index()
     {
-        $projects = Project::paginate($this->perpage);
+        $projects = Project::paginate();
+
         return view('admin.project.index', compact('projects'));
     }
 
@@ -32,15 +32,23 @@ class ProjectController extends Controller
         return view('admin.project.create');
     }
 
-    public function removeUserFromProject(Project $project, User $user)
+    public function removeUserFromProject($projectId, $userId)
     {
-        ProjectUser::where(['project_id'=>$project->id, 'user_id'=>$user->id])->delete(); //???
+        if(Auth()->user()->can('removeUser', $projectId, $userId)) {
+            ProjectUser::where(['project_id' => $projectId, 'user_id' => $userId])->delete();
+        }
+        return redirect()->action('Admin\ProjectController@index');
+    }
+
+    public function addUserToProject($project_id, $user_id)
+    {
+
     }
 
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
@@ -49,8 +57,10 @@ class ProjectController extends Controller
             'name' => 'required|min:5',
             'description' => 'required|min:10'
         ]);
-        $project = Project::create($request->all());
-        $project->projectUser()->create(['project_id'=>$project->id, 'user_id'=>Auth()->user()->id, 'role'=>User::ROLE_PROJECT_ADMIN]);
+
+        $project = Project::create($request->only(['name', 'description']));
+        $project->projectUser()->create(['project_id' => $project->id, 'user_id' => Auth()->user()->id, 'role' => User::ROLE_PROJECT_ADMIN]);
+
         return redirect()->action('Admin\ProjectController@index');
     }
 
@@ -73,13 +83,18 @@ class ProjectController extends Controller
      */
     public function edit(Project $project)
     {
-        return view('admin.project.edit', compact('project'));
+        if(Auth()->user()->can('update', $project)) {
+            return view('admin.project.edit', compact('project'));
+        }
+        else{
+            return redirect()->back()->with('alert', 'alerts.permission');
+        }
     }
 
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param \Illuminate\Http\Request $request
      * @param Project $project
      * @return \Illuminate\Http\Response
      */
@@ -89,7 +104,9 @@ class ProjectController extends Controller
             'name' => 'required|min:5',
             'description' => 'required|min:10'
         ]);
+
         $project->update($request->all());
+
         return redirect()->back();
     }
 
@@ -102,6 +119,7 @@ class ProjectController extends Controller
     public function destroy(Project $project)
     {
         $project->delete();
+
         return redirect()->back();
     }
 }
