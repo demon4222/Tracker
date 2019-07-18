@@ -25,7 +25,7 @@
             @foreach($projects as $project)
                 <tr>
                     <td>
-                        <a href="{{action('Admin\ProjectController@show', $project)}}">{{$project->name}}</a>
+                        <a href="{{action('User\ProjectController@show', $project)}}">{{$project->name}}</a>
                     </td>
                     <td>{{$project->users->count()}}</td>
                     <td class="text-center">a</td>

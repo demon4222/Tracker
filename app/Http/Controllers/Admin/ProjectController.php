@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Models\ProjectUser;
 use App\User;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -19,7 +18,7 @@ class ProjectController extends Controller
     {
         $projects = Project::paginate();
 
-        return view('admin.project.index', compact('projects'));
+        return view('project.index', compact('projects'));
     }
 
     /**
@@ -31,36 +30,7 @@ class ProjectController extends Controller
     {
         $this->authorize('create', Project::class, Auth()->user());
 
-        return view('admin.project.create');
-    }
-
-    public function removeUserFromProject(Project $project, $userId)
-    {
-        $this->authorize('removeUser', $project, $userId);
-
-        $project->projectUser()->whereUserId($userId)->delete();
-
-        return redirect()->action('Admin\ProjectController@members', compact('project'));
-    }
-
-    public function addUser(Project $project, $userId)
-    {
-        $this->authorize('addUser', $project, $userId);
-
-        $project->projectUser()->firstOrCreate(['project_id' => $project->id, 'user_id' => $userId, 'role' => User::ROLE_DEVELOPER]);
-
-        return redirect()->action('Admin\ProjectController@members', compact('project'));
-    }
-
-    public function changeUserRole(Request $request, Project $project, $userId)
-    {
-        $this->authorize('changeUserRole', $project, $userId);
-
-        $request->validate([
-            'role' => 'required'
-        ]);
-
-        $project->projectUser()->whereUserId($userId)->update(['role'=> $request->role]);
+        return view('project.create');
     }
 
     /**
@@ -83,49 +53,6 @@ class ProjectController extends Controller
     }
 
     /**
-     * Display the specified resource.
-     *
-     * @param Project $project
-     * @return \Illuminate\Http\Response
-     */
-    public function show(Project $project)
-    {
-        return view('admin.project.show', compact('project'));
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param Project $project
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Project $project)
-    {
-        return view('admin.project.edit', compact('project'));
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param \Illuminate\Http\Request $request
-     * @param Project $project
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, Project $project)
-    {
-        $this->authorize('update', $project, Auth()->user());
-
-        $request->validate([
-            'name' => 'required|min:5',
-            'description' => 'required|min:10'
-        ]);
-
-        $project->update($request->all());
-
-        return redirect()->back();
-    }
-
-    /**
      * Remove the specified resource from storage.
      *
      * @param Project $project
@@ -136,10 +63,5 @@ class ProjectController extends Controller
         $project->delete();
 
         return redirect()->action('Admin\ProjectController@index');
-    }
-
-    public function members(Project $project)
-    {
-        return view('admin.project.members', compact('project'));
     }
 }

@@ -16,12 +16,13 @@
                     <div class="col-4">
                         <ul class="list-group">
                             <li class="list-group-item d-flex justify-content-between align-items-center">
-                                <a href="#">Issues</a>
+                                <a href="#">@lang('project.issues')</a>
                                 <span class="badge badge-primary badge-pill">14</span>
                             </li>
                             <li class="list-group-item d-flex justify-content-between align-items-center">
-                                <a href="{{action('Admin\ProjectController@members', $project)}}">Members</a>
-                                <span class="badge badge-primary badge-pill">{{$project->projectUser->count()}}</span>
+                                <a href="{{action('User\ProjectController@members', $project)}}">@lang('project.members')</a>
+                                <span
+                                    class="badge badge-primary badge-pill">{{$project->projectUser->count()}}</span>
                             </li>
                         </ul>
                     </div>
@@ -34,15 +35,16 @@
                                 <input type="submit" class="btn btn-danger" value="@lang('actions.del')">
                             </form>
                         @endif
-                        @can('update', $project, Auth()->user())
-                            <a href="{{action('Admin\ProjectController@edit', $project)}}"
+                        @can('update', $project)
+                            <a href="{{action('User\ProjectController@edit', $project)}}"
                                class="btn btn-primary my-2">@lang('actions.edit')</a>
                         @endcan
+                        <a href="{{action('User\TaskController@create', $project)}}" class="btn btn-success mt-2">@lang('tasks.new')</a>
                     </div>
                 </div>
             </div>
             <div class="description-block">
-                <h5>Description</h5>
+                <h5>@lang('project.desc')</h5>
                 <div class="desc-text">
                     <p>{{$project->description}}</p>
                 </div>
