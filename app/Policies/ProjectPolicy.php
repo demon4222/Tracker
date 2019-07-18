@@ -11,16 +11,25 @@ class ProjectPolicy
 {
     use HandlesAuthorization;
 
-//    public function before($user)
-//    {
-//        return $user->is_admin;
-//    }
+    public function before($user)
+    {
+        if($user->is_admin) {
+            return true;
+        }
+    }
+
+    protected function isProjectAdmin(User $user, Project $project)
+    {
+        $role =  $this->getRole($user, $project);
+
+        return $role == User::ROLE_PROJECT_ADMIN;
+    }
 
     protected function getRole(User $user, Project $project)
     {
-        return ProjectUser::where(['project_id' => $project->id, 'user_id' => $user->id])->first()->role;
+        return $project->projectUser()->whereUserId($user->id);
     }
-    
+
     /**
      * Determine whether the user can view any projects.
      *
@@ -62,11 +71,9 @@ class ProjectPolicy
      * @param  \App\Models\Project  $project
      * @return mixed
      */
-    public function update(User $user, Project $project)
+    public function update(Project $project, User $user)
     {
-        $role = $this->getRole($user, $project);
-
-        return $role == User::ROLE_PROJECT_ADMIN;
+        return $this->isProjectAdmin($user, $project);
     }
 
     /**
@@ -78,16 +85,22 @@ class ProjectPolicy
      */
     public function delete(User $user, Project $project)
     {
-        $role = $this->getRole($user, $project);
-
-        return $role == User::ROLE_PROJECT_ADMIN;
+        return false;
     }
 
-    public function addUser(User $user, Project $project)
+    public function addUser(Project $project, User $user)
     {
-        $role = $this->getRole($user, $project);
+        return $this->isProjectAdmin($user, $project);
+    }
 
-        return $role == User::ROLE_PROJECT_ADMIN;
+    public function removeUser(Project $project, User $user)
+    {
+        return $this->isProjectAdmin($user, $project);
+    }
+
+    public function changeUserRole(Project $project, User $user)
+    {
+        return $this->isProjectAdmin($user, $project);
     }
 
     /**

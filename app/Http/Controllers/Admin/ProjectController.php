@@ -2,11 +2,11 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Models\ProjectUser;
 use App\User;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Models\Project;
-use App\Models\ProjectUser;
 
 class ProjectController extends Controller
 {
@@ -29,20 +29,38 @@ class ProjectController extends Controller
      */
     public function create()
     {
+        $this->authorize('create', Project::class, Auth()->user());
+
         return view('admin.project.create');
     }
 
-    public function removeUserFromProject($projectId, $userId)
+    public function removeUserFromProject(Project $project, $userId)
     {
-        if(Auth()->user()->can('removeUser', $projectId, $userId)) {
-            ProjectUser::where(['project_id' => $projectId, 'user_id' => $userId])->delete();
-        }
-        return redirect()->action('Admin\ProjectController@index');
+        $this->authorize('removeUser', $project, $userId);
+
+        $project->projectUser()->whereUserId($userId)->delete();
+
+        return redirect()->action('Admin\ProjectController@members', compact('project'));
     }
 
-    public function addUserToProject($project_id, $user_id)
+    public function addUser(Project $project, $userId)
     {
+        $this->authorize('addUser', $project, $userId);
 
+        $project->projectUser()->firstOrCreate(['project_id' => $project->id, 'user_id' => $userId, 'role' => User::ROLE_DEVELOPER]);
+
+        return redirect()->action('Admin\ProjectController@members', compact('project'));
+    }
+
+    public function changeUserRole(Request $request, Project $project, $userId)
+    {
+        $this->authorize('changeUserRole', $project, $userId);
+
+        $request->validate([
+            'role' => 'required'
+        ]);
+
+        $project->projectUser()->whereUserId($userId)->update(['role'=> $request->role]);
     }
 
     /**
@@ -72,7 +90,7 @@ class ProjectController extends Controller
      */
     public function show(Project $project)
     {
-        //
+        return view('admin.project.show', compact('project'));
     }
 
     /**
@@ -83,12 +101,7 @@ class ProjectController extends Controller
      */
     public function edit(Project $project)
     {
-        if(Auth()->user()->can('update', $project)) {
-            return view('admin.project.edit', compact('project'));
-        }
-        else{
-            return redirect()->back()->with('alert', 'alerts.permission');
-        }
+        return view('admin.project.edit', compact('project'));
     }
 
     /**
@@ -100,6 +113,8 @@ class ProjectController extends Controller
      */
     public function update(Request $request, Project $project)
     {
+        $this->authorize('update', $project, Auth()->user());
+
         $request->validate([
             'name' => 'required|min:5',
             'description' => 'required|min:10'
@@ -120,6 +135,11 @@ class ProjectController extends Controller
     {
         $project->delete();
 
-        return redirect()->back();
+        return redirect()->action('Admin\ProjectController@index');
+    }
+
+    public function members(Project $project)
+    {
+        return view('admin.project.members', compact('project'));
     }
 }

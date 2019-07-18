@@ -1,0 +1,20 @@
+.add-user-block {
+  z-index: -1;
+  width: 60%;
+  max-height: 50%;
+  position: absolute;
+  top: 30%;
+  left: 30%;
+}
+
+.close-block {
+  position: relative;
+  top: -30px;
+}
+
+.remove-btn {
+  position: relative;
+  display: inline;
+  right: -70%;
+}
+
