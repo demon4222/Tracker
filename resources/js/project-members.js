@@ -12,7 +12,7 @@ $(document).ready(function () {
         });
         $.ajax({
             type: 'POST',
-            url: '/admin/project/' + project + '/changeUserRole/' + user,
+            url: '/projects/' + project + '/changeUserRole/' + user,
             data: {role: role},
             success: function (data) {
                 alert('Role was changed successful!');
@@ -27,7 +27,7 @@ $(document).ready(function () {
         let userId = $(this).val();
         let project = $('#project').val();
         if (userId != 0) {
-            location.href = '/admin/project/'+ project + '/addUser/'+ userId;
+            location.href = '/projects/'+ project + '/addUser/'+ userId;
         }
     })
 })

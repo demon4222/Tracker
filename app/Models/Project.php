@@ -19,8 +19,13 @@ class Project extends Model
         return $this->hasMany(ProjectUser::class);
     }
 
-    public function isUserNotInProject($userId)
+    public function isUserInProject($userId)
     {
-        return $this->projectUser()->whereUserId($userId)->get()->isEmpty();
+        return $this->projectUser()->whereUserId($userId)->exists();
+    }
+
+    public function tasks()
+    {
+        return $this->hasMany(Task::class);
     }
 }

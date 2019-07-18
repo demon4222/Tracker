@@ -6,7 +6,7 @@
             <h4>{{$project->name}}</h4>
         </div>
         <div class="card-body">
-            <form action="{{action('Admin\ProjectController@update', $project)}}" method="POST">
+            <form action="{{action('User\ProjectController@update', $project)}}" method="POST">
                 @csrf
                 @method('PATCH')
                 <div class="form-group">

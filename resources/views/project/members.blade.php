@@ -15,20 +15,22 @@
             <h4>Members</h4>
         </div>
         <div class="card-body">
-            @can('addUser', $project, Auth()->user())
+            @can('addUser', $project)
                 <select class="custom-select add-new-member mb-3">
-                    <option value="0" selected>Add member</option>
+                    <option value="0" selected>@lang('project.add_member')</option>
                     @foreach(\App\User::all() as $user)
-                        <option value="{{$user->id}}">{{$user->name}}</option>
+                        @if(!$project->isUserInProject($user->id))
+                            <option value="{{$user->id}}">{{$user->name}}</option>
+                        @endif
                     @endforeach
                 </select>
             @endcan
             <table class="table">
                 <thead class="thead-dark">
                 <tr>
-                    <th scope="col">Name</th>
-                    <th scope="col">Issues</th>
-                    <th scope="col">Role</th>
+                    <th scope="col">@lang('project.member')</th>
+                    <th scope="col">@lang('project.issues')</th>
+                    <th scope="col">@lang('project.role')</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -37,28 +39,32 @@
                         <td>{{$user->name}}</td>
                         <td>4</td>
                         <td class="role">
+                            @can('changeUserRole', $project)
                             <div>
                                 <input type="hidden" value="{{$user->id}}" id="user">
                                 <select class="custom-select role-select">
                                     <option
                                         value="{{App\User::ROLE_PROJECT_ADMIN}}" {{$user->projectUser->role == App\User::ROLE_PROJECT_ADMIN ? 'selected' : ''}}>
-                                        Project Admin
+                                        @lang('project.role_admin')
                                     </option>
                                     <option
                                         value="{{App\User::ROLE_DEVELOPER}}" {{$user->projectUser->role == App\User::ROLE_DEVELOPER ? 'selected' : ''}}>
-                                        Developer
+                                        @lang('project.role_dev')
                                     </option>
                                 </select>
-                                {{--                                {{$user->projectUser->role == App\User::ROLE_PROJECT_ADMIN ? 'Project admin' : 'Developer' }}--}}
                             </div>
-                            @can('removeUser', $project, Auth()->user())
+                                @else
+                                <label>{{$user->projectUser->role == App\User::ROLE_PROJECT_ADMIN ? __('project.role_admin') : __('project.role_dev')}}</label>
+                            @endcan
+                            @can('removeUser', $project)
                                 <form
-                                    action="{{action('Admin\ProjectController@removeUserFromProject', [$project, $user->id])}}"
+                                    action="{{action('User\ProjectController@removeUserFromProject', [$project, $user->id])}}"
                                     method="POST">
                                     @csrf
                                     @method('DELETE')
                                     <div class="remove-btn">
-                                        <button type="submit" class="btn btn-sm btn-danger">remove from project</button>
+                                        <button type="submit"
+                                                class="btn btn-sm btn-danger">@lang('actions.del')</button>
                                     </div>
                                 </form>
                             @endcan
