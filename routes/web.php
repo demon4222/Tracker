@@ -22,6 +22,24 @@ Route::group(['middleware' => 'auth'], function () {
         Route::resource('/projects', 'ProjectController', [
             'except' => ['show', 'edit', 'update']
         ]);
+        Route::get('/', 'AdminController@index');
+        Route::get('/states', 'AdminController@states');
+        Route::post('/states/store', 'AdminController@stateStore');
+        Route::delete('/states/{state}/destroy', 'AdminController@stateDestroy');
+        Route::put('/states/{state}/update', 'AdminController@stateUpdate');
+        Route::get('/states/{state}/edit', 'AdminController@stateEdit');
+
+        Route::get('/priorities', 'AdminController@priorities');
+        Route::post('/priorities/store', 'AdminController@priorityStore');
+        Route::delete('/priorities/{priority}/destroy', 'AdminController@priorityDestroy');
+        Route::put('/priorities/{priority}/update', 'AdminController@priorityUpdate');
+        Route::get('/priorities/{priority}/edit', 'AdminController@priorityEdit');
+
+        Route::get('/types', 'AdminController@types');
+        Route::post('/types/store', 'AdminController@typeStore');
+        Route::delete('/types/{type}/destroy', 'AdminController@typeDestroy');
+        Route::put('/types/{type}/update', 'AdminController@typeUpdate');
+        Route::get('/types/{type}/edit', 'AdminController@typeEdit');
     });
     Route::group(['namespace' => 'User'], function () {
         Route::resource('/projects', 'ProjectController', [

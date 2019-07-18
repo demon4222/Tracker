@@ -88,6 +88,7 @@
             @auth
                 @if(Auth()->user()->is_admin)
                     <a href="{{action('Admin\ProjectController@index')}}">@lang('project.all')</a>
+                    <a href="{{action('Admin\AdminController@index')}}">@lang('admin.panel')</a>
                 @endif
             @endauth
             <a href="{{action('User\ProjectController@index')}}">@lang('project.my')</a>
