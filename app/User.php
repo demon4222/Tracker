@@ -50,6 +50,6 @@ class User extends Authenticatable
 
     public function projectUser()
     {
-        return $this->belongsTo(ProjectUser::class);
+        return $this->hasOne(ProjectUser::class);
     }
 }

@@ -20,6 +20,9 @@ Auth::routes();
 Route::group(['middleware'=>'auth'], function(){
     Route::group(['prefix'=>'admin', 'namespace' => 'Admin'], function (){
         Route::resource('/projects', 'ProjectController');
-        Route::delete('/projects/{projectId}/removeUser/{userId}', 'ProjectController@removeUserFromProject');
+        Route::delete('/projects/{project}/removeUser/{userId}', 'ProjectController@removeUserFromProject');
+        Route::get('/projects/{project}/addUser/{userId}', 'ProjectController@addUser');
+        Route::post('/projects/{project}/changeUserRole/{userId}', 'ProjectController@changeUserRole');
+        Route::get('/projects/{project}/members', 'ProjectController@members');
     });
 });
