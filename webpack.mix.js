@@ -17,4 +17,5 @@ mix.js('resources/js/app.js', 'public/js')
     .sass('resources/sass/project/index.scss', 'public/css/project')
     .sass('resources/sass/project/show.scss', 'public/css/project')
     .sass('resources/sass/project/members.scss', 'public/css/project')
+    .sass('resources/sass/tasks/index.scss', 'public/css/tasks')
     .sass('resources/sass/app.scss', 'public/css');

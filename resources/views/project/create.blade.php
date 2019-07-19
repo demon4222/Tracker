@@ -8,7 +8,7 @@
         <div class="card-body">
             <form action="{{action('Admin\ProjectController@store')}}" method="POST">
                 @csrf
-                @component('components.inputName',[
+                @component('components.input',[
                     'labelName' => 'Название проекта',
                     'name' => 'name',
                     'type' => 'text'

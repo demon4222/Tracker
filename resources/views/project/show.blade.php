@@ -16,8 +16,8 @@
                     <div class="col-4">
                         <ul class="list-group">
                             <li class="list-group-item d-flex justify-content-between align-items-center">
-                                <a href="#">@lang('project.issues')</a>
-                                <span class="badge badge-primary badge-pill">14</span>
+                                <a href="{{action('User\TaskController@index', $project)}}">@lang('project.issues')</a>
+                                <span class="badge badge-primary badge-pill">{{$project->tasks->count()}}</span>
                             </li>
                             <li class="list-group-item d-flex justify-content-between align-items-center">
                                 <a href="{{action('User\ProjectController@members', $project)}}">@lang('project.members')</a>
