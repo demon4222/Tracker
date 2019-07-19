@@ -13,16 +13,19 @@
 
         <div class="card-body">
             <a href="#" class="btn btn-success mb-3 add-state-btn">@lang('actions.create')</a>
-            <div class="new-state-block" hidden>
-                <form action="{{action('Admin\AdminController@priorityStore')}}" method="POST" class="add-state-form">
+            <div class="new-state-block" style="display: none">
+                <form action="{{action('Admin\PriorityController@store')}}" method="POST" class="add-state-form">
                     @csrf
                     <div class="form-group">
-                        <label>Name</label>
-                        <input name="name" type="text" class="form-control my-1">
+                        @component('components.inputName',[
+                            'labelName' => 'Name',
+                            'name' => 'name',
+                            'type' => 'text'
+                        ])
+                        @endcomponent
                         <label>Value</label>
                         <input name="weight" type="number" class="form-control my-1">
                         <button type="submit" class="btn btn-primary btn-sm mt-2">@lang('actions.add')</button>
-                        <a href="#" class="btn btn-danger btn-sm ml-4 mt-2 hide-btn">@lang('actions.hide')</a>
                     </div>
                 </form>
             </div>
@@ -33,9 +36,9 @@
                             <a href="#">{{$priority->name}}</a>
                         </div>
                         <div class="actions">
-                            <a href="{{action('Admin\AdminController@priorityEdit', $priority)}}"
+                            <a href="{{action('Admin\PriorityController@edit', $priority)}}"
                                class="badge badge-primary badge-pill state-edit-btn">@lang('actions.edit')</a>
-                            <form action="{{action('Admin\AdminController@priorityDestroy', $priority)}}" method="POST">
+                            <form action="{{action('Admin\PriorityController@destroy', $priority)}}" method="POST">
                                 @csrf
                                 @method('DELETE')
                                 <button class="badge badge-danger badge-pill">@lang('actions.del')</button>

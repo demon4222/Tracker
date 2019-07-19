@@ -22,36 +22,36 @@ Route::group(['middleware' => 'auth'], function () {
         Route::resource('/projects', 'ProjectController', [
             'except' => ['show', 'edit', 'update']
         ]);
+
         Route::get('/', 'AdminController@index');
-        Route::get('/states', 'AdminController@states');
-        Route::post('/states/store', 'AdminController@stateStore');
-        Route::delete('/states/{state}/destroy', 'AdminController@stateDestroy');
-        Route::put('/states/{state}/update', 'AdminController@stateUpdate');
-        Route::get('/states/{state}/edit', 'AdminController@stateEdit');
 
-        Route::get('/priorities', 'AdminController@priorities');
-        Route::post('/priorities/store', 'AdminController@priorityStore');
-        Route::delete('/priorities/{priority}/destroy', 'AdminController@priorityDestroy');
-        Route::put('/priorities/{priority}/update', 'AdminController@priorityUpdate');
-        Route::get('/priorities/{priority}/edit', 'AdminController@priorityEdit');
+        Route::resource('/states', 'StateController', [
+           'except' => ['create', 'show']
+        ]);
 
-        Route::get('/types', 'AdminController@types');
-        Route::post('/types/store', 'AdminController@typeStore');
-        Route::delete('/types/{type}/destroy', 'AdminController@typeDestroy');
-        Route::put('/types/{type}/update', 'AdminController@typeUpdate');
-        Route::get('/types/{type}/edit', 'AdminController@typeEdit');
+        Route::resource('/priorities', 'PriorityController', [
+            'except' => ['create', 'show']
+        ]);
+
+        Route::resource('/types', 'TypeController', [
+            'except' => ['create', 'show']
+        ]);
     });
     Route::group(['namespace' => 'User'], function () {
         Route::resource('/projects', 'ProjectController', [
             'except' => ['create', 'destroy', 'index', 'store']
         ]);
-        Route::get('/myprojects', 'ProjectController@index');
-        Route::delete('/projects/{project}/removeUser/{userId}', 'ProjectController@removeUserFromProject');
-        Route::get('/projects/{project}/addUser/{userId}', 'ProjectController@addUser');
-        Route::post('/projects/{project}/changeUserRole/{userId}', 'ProjectController@changeUserRole');
-        Route::get('/projects/{project}/members', 'ProjectController@members');
 
-        Route::get('/projects/{project}/tasks/create', 'TaskController@create');
-        Route::post('/projects/{project}/tasks/store', 'TaskController@store');
+        Route::get('/myprojects', 'ProjectController@index');
+
+        Route::group(['prefix' => 'projects/{project}'], function(){
+            Route::delete('/removeUser/{userId}', 'ProjectController@removeUserFromProject');
+            Route::get('/addUser/{userId}', 'ProjectController@addUser');
+            Route::post('/changeUserRole/{userId}', 'ProjectController@changeUserRole');
+            Route::get('/members', 'ProjectController@members');
+
+            Route::get('/tasks/create', 'TaskController@create');
+            Route::post('/tasks/store', 'TaskController@store');
+        });
     });
 });

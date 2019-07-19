@@ -8,7 +8,7 @@
     </div>
 
     <div class="card-body">
-        <form action="{{action('Admin\AdminController@stateUpdate', $state)}}" method="POST">
+        <form action="{{action('Admin\StateController@update', $state)}}" method="POST">
             @csrf
             @method('PUT')
             <div class="form-group">

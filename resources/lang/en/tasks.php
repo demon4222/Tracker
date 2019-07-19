@@ -1,5 +1,7 @@
 <?php
-return[
+
+return [
+
     'new' => 'Create new Task',
     'name' => 'Task name',
     'desc' => 'Task description',
@@ -9,4 +11,5 @@ return[
     'assigned' => 'Assigned task to',
     'est' => 'Estimation',
     'time' => 'Spent time'
+
 ];
