@@ -11,55 +11,75 @@
             <form action="{{action('User\TaskController@store', $project)}}" method="POST">
                 @csrf
                 <div class="form-group">
-                    <label>@lang('tasks.name')</label>
-                    <input name="name" type="text" class="form-control">
+                    @component('components.input',[
+                        'labelName' => __('tasks.name'),
+                        'name' => 'name',
+                        'type' => 'text',
+                        'value' => ''
+                    ])
+                    @endcomponent
                 </div>
                 <div class="form-group">
-                    <label>@lang('tasks.type')</label>
-                    <select name="type_id" class="form-control">
-                        <option>1</option>
-                        <option>2</option>
-                    </select>
+                    @component('components.select', [
+                        'label' => __('tasks.type'),
+                        'name' => 'type_id',
+                        'id' => 'select_type',
+                        'options' => $types,
+                    ])
+                    @endcomponent
                 </div>
                 <div class="form-group">
-                    <label>@lang('tasks.state')</label>
-                    <select name="state_id" class="form-control">
-                        <option>1</option>
-                        <option>2</option>
-                        <option>3</option>
-                        <option>4</option>
-                        <option>5</option>
-                    </select>
+                    @component('components.select', [
+                        'label' => __('tasks.state'),
+                        'name' => 'state_id',
+                        'id' => 'select_state',
+                        'options' => $states,
+                    ])
+                    @endcomponent
                 </div>
                 <div class="form-group">
-                    <label>@lang('tasks.priority')</label>
-                    <select name="priority_id" class="form-control">
-                        <option>1</option>
-                        <option>2</option>
-                        <option>3</option>
-                        <option>4</option>
-                        <option>5</option>
-                    </select>
+                    @component('components.select', [
+                        'label' => __('tasks.priority'),
+                        'name' => 'priority_id',
+                        'id' => 'priority_type',
+                        'options' => $priorities,
+                    ])
+                    @endcomponent
                 </div>
                 <div class="form-group">
-                    <label>@lang('tasks.est')</label>
-                    <input name="estimation" type="number" class="form-control">
+                    @component('components.input',[
+                        'labelName' => __('tasks.est'),
+                        'name' => 'estimation',
+                        'type' => 'number',
+                        'value' => ''
+                    ])
+                    @endcomponent
                 </div>
                 <div class="form-group">
-                    <label>@lang('tasks.time')</label>
-                    <input name="spent_time" type="number" class="form-control">
+                    @component('components.input',[
+                        'labelName' => __('tasks.time'),
+                        'name' => 'spent_time',
+                        'type' => 'number',
+                        'value' => ''
+                    ])
+                    @endcomponent
                 </div>
                 <div class="form-group">
-                    <label>@lang('tasks.desc')</label>
-                    <textarea name="description" class="form-control" rows="6"></textarea>
+                    @component('components.textarea',[
+                        'labelName' => __('tasks.desc'),
+                        'name' => 'description',
+                        'value' => ''
+                    ])
+                    @endcomponent
                 </div>
                 <div class="form-group">
-                    <label>@lang('tasks.assigned')</label>
-                    <select name="assigned_to_id" class="form-control">
-                        @foreach($project->users as $user)
-                            <option value="{{$user->id}}">{{$user->name}}</option>
-                        @endforeach
-                    </select>
+                    @component('components.select', [
+                        'label' => __('tasks.assigned'),
+                        'name' => 'assigned_to_id',
+                        'id' => 'select_assigned_to',
+                        'options' => $project->users,
+                    ])
+                    @endcomponent
                 </div>
                 <button class="btn btn-success">@lang('actions.create')</button>
             </form>

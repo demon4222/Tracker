@@ -17,7 +17,7 @@
                 <form action="{{action('Admin\StateController@store')}}" method="POST" class="add-state-form">
                     @csrf
                     <div class="form-group">
-                        @component('components.inputName',[
+                        @component('components.input',[
                             'labelName' => 'Name',
                             'name' => 'name',
                             'type' => 'text'

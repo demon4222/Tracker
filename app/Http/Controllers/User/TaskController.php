@@ -2,21 +2,39 @@
 
 namespace App\Http\Controllers\User;
 
+use App\Models\Priority;
 use App\Models\Project;
+use App\Models\State;
 use App\Models\Task;
+use App\Models\Type;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
 class TaskController extends Controller
 {
+    public function indexAll()
+    {
+        $tasks = Task::all();
+
+        return view('tasks.indexAll', compact('tasks'));
+    }
+
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Project $project)
     {
-        //
+        $tasks = $project->tasks()->paginate();
+        return view('tasks.index', compact('tasks', 'project'));
+    }
+
+    public function search(Project $project, $search)
+    {
+        $tasks = DB::table('tasks')->where(['project_id' => $project->id, 'name', 'like', "%$search%"]);
+        dd($tasks);
+        return view('tasks.index', compact('tasks'));
     }
 
     /**
@@ -26,7 +44,11 @@ class TaskController extends Controller
      */
     public function create(Project $project)
     {
-        return view('tasks.create', compact('project'));
+        $types = Type::all();
+        $states = State::all();
+        $priorities = Priority::all();
+
+        return view('tasks.create', compact('project', 'types', 'states', 'priorities'));
     }
 
     /**
@@ -73,9 +95,13 @@ class TaskController extends Controller
      * @param \App\Task $task
      * @return \Illuminate\Http\Response
      */
-    public function edit(Task $task)
+    public function edit(Project $project, Task $task)
     {
-        //
+        $types = Type::all();
+        $states = State::all();
+        $priorities = Priority::all();
+
+        return view('tasks.edit', compact('task', 'types', 'states', 'priorities', 'project'));
     }
 
     /**
@@ -85,9 +111,23 @@ class TaskController extends Controller
      * @param \App\Task $task
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Task $task)
+    public function update(Request $request, Project $project, Task $task)
     {
-        //
+        $request->validate([
+            'name' => 'required|min:5',
+            'description' => 'required|min:10',
+            'type_id' => 'required|min:1',
+            'state_id' => 'required|min:1',
+            'priority_id' => 'required|min:1',
+            'assigned_to_id' => 'required|min:1',
+            'estimation' => 'required|min:1',
+            'spent_time' => 'required|min:1',
+        ]);
+        $values = $request->all();
+
+        $task->update($values);
+
+        return redirect()->action('User\TaskController@index', $project);
     }
 
     /**
@@ -96,8 +136,10 @@ class TaskController extends Controller
      * @param \App\Task $task
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Task $task)
+    public function destroy(Project $project, Task $task)
     {
-        //
+        $task->delete();
+
+        return redirect()->back();
     }
 }

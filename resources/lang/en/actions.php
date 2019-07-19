@@ -8,5 +8,6 @@ return [
     'create' => 'Create',
     'add' => 'Add',
     'hide' => 'Hide',
+    'search' => 'Search',
 
 ];

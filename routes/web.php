@@ -50,8 +50,7 @@ Route::group(['middleware' => 'auth'], function () {
             Route::post('/changeUserRole/{userId}', 'ProjectController@changeUserRole');
             Route::get('/members', 'ProjectController@members');
 
-            Route::get('/tasks/create', 'TaskController@create');
-            Route::post('/tasks/store', 'TaskController@store');
+            Route::resource('/tasks', 'TaskController');
         });
     });
 });
