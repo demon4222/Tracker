@@ -8,4 +8,8 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class Priority extends Model
 {
     use SoftDeletes;
+
+    protected $fillable = ['name', 'weight'];
+
+    public $timestamps = false;
 }

@@ -20,7 +20,7 @@ class ProjectController extends Controller
     {
         $this->authorize('removeUser', $project, $userId);
 
-        if (!$project->projectUser()->whereUserId($userId)->first()->user->is_admin && !Auth()->user->is_admin) {
+        if (!$project->projectUser()->whereUserId($userId)->first()->user->is_admin) {
             $project->projectUser()->whereUserId($userId)->delete();
         }
 

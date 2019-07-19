@@ -8,4 +8,8 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class State extends Model
 {
     use SoftDeletes;
+
+    protected $fillable = ['name', 'is_resolved'];
+
+    public $timestamps = false;
 }
