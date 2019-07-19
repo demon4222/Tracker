@@ -4,7 +4,7 @@
 
     <div class="card">
         <div class="card-header">
-            <h4>@lang('tasks.new')</h4>
+            <h4>@lang('tasks.edit')</h4>
         </div>
 
         <div class="card-body">
@@ -21,28 +21,34 @@
                     @endcomponent
                 </div>
                 <div class="form-group">
-                    <label>@lang('tasks.type')</label>
-                    <select name="type_id" class="form-control">
-                        @foreach($types as $type)
-                            <option {{$task->type_id == $type->id ? 'selected' : ''}} value="{{$type->id}}">{{$type->name}}</option>
-                        @endforeach
-                    </select>
+                    @component('components.select', [
+                        'label' => __('tasks.type'),
+                        'name' => 'type_id',
+                        'id' => 'select_type',
+                        'value' => $task->type->id,
+                        'options' => $types,
+                    ])
+                    @endcomponent
                 </div>
                 <div class="form-group">
-                    <label>@lang('tasks.state')</label>
-                    <select name="state_id" class="form-control">
-                        @foreach($states as $state)
-                            <option {{$task->state_id == $state->id ? 'selected' : ''}} value="{{$state->id}}">{{$state->name}}</option>
-                        @endforeach
-                    </select>
+                    @component('components.select', [
+                        'label' => __('tasks.state'),
+                        'name' => 'state_id',
+                        'id' => 'select_state',
+                        'value' => $task->state->id,
+                        'options' => $priorities,
+                    ])
+                    @endcomponent
                 </div>
                 <div class="form-group">
-                    <label>@lang('tasks.priority')</label>
-                    <select name="priority_id" class="form-control">
-                        @foreach($priorities as $priority)
-                            <option {{$task->priority_id == $priority->id ? 'selected' : ''}} value="{{$priority->id}}">{{$priority->name}}</option>
-                        @endforeach
-                    </select>
+                    @component('components.select', [
+                        'label' => __('tasks.priority'),
+                        'name' => 'priority_id',
+                        'id' => 'select_priority',
+                        'value' => $task->priority->id,
+                        'options' => $priorities,
+                    ])
+                    @endcomponent
                 </div>
                 <div class="form-group">
                     @component('components.input',[
@@ -71,12 +77,14 @@
                     @endcomponent
                 </div>
                 <div class="form-group">
-                    <label>@lang('project.members')</label>
-                    <select name="assigned_to_id" class="form-control">
-                        @foreach(\App\User::all() as $user)
-                            <option {{$task->assigned_to_id == $user->id ? 'selected' : ''}} value="{{$user->id}}">{{$user->name}}</option>
-                        @endforeach
-                    </select>
+                    @component('components.select', [
+                        'label' => __('project.members'),
+                        'name' => 'assigned_to_id',
+                        'id' => 'select_assigned',
+                        'value' => $task->assigned->id,
+                        'options' => \App\User::all(),
+                    ])
+                    @endcomponent
                 </div>
                 <button class="btn btn-success">@lang('actions.edit')</button>
             </form>

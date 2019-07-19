@@ -3,6 +3,7 @@
 return [
 
     'new' => 'Create new Task',
+    'edit' => 'Edit Task',
     'name' => 'Task name',
     'desc' => 'Task description',
     'state' => 'Task state',

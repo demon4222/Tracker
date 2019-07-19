@@ -20,7 +20,6 @@
                                 'labelName' => 'Search',
                                 'name' => 'search',
                                 'type' => 'text',
-                                'value' => ''
                             ])
                             @endcomponent
                         </div>

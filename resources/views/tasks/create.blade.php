@@ -15,7 +15,6 @@
                         'labelName' => __('tasks.name'),
                         'name' => 'name',
                         'type' => 'text',
-                        'value' => ''
                     ])
                     @endcomponent
                 </div>
@@ -51,7 +50,6 @@
                         'labelName' => __('tasks.est'),
                         'name' => 'estimation',
                         'type' => 'number',
-                        'value' => ''
                     ])
                     @endcomponent
                 </div>
@@ -60,7 +58,6 @@
                         'labelName' => __('tasks.time'),
                         'name' => 'spent_time',
                         'type' => 'number',
-                        'value' => ''
                     ])
                     @endcomponent
                 </div>
@@ -68,7 +65,6 @@
                     @component('components.textarea',[
                         'labelName' => __('tasks.desc'),
                         'name' => 'description',
-                        'value' => ''
                     ])
                     @endcomponent
                 </div>

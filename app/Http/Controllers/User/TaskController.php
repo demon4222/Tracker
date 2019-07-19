@@ -12,28 +12,22 @@ use App\Http\Controllers\Controller;
 
 class TaskController extends Controller
 {
-    public function indexAll()
-    {
-        $tasks = Task::all();
-
-        return view('tasks.indexAll', compact('tasks'));
-    }
-
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function index(Project $project)
+    public function index(Project $project = null)
     {
-        $tasks = $project->tasks()->paginate();
+        $tasks = isset($project) ? $project->tasks()->paginate() : Task::paginate();
+
         return view('tasks.index', compact('tasks', 'project'));
     }
 
     public function search(Project $project, $search)
     {
-        $tasks = DB::table('tasks')->where(['project_id' => $project->id, 'name', 'like', "%$search%"]);
-        dd($tasks);
+        $project->tasks()->where('name', 'like', "%$search%");
+
         return view('tasks.index', compact('tasks'));
     }
 
@@ -62,10 +56,10 @@ class TaskController extends Controller
         $request->validate([
             'name' => 'required|min:5',
             'description' => 'required|min:10',
-            'type_id' => 'required|min:1',
-            'state_id' => 'required|min:1',
-            'priority_id' => 'required|min:1',
-            'assigned_to_id' => 'required|min:1',
+            'type_id' => 'required|exists:types,id',
+            'state_id' => 'required|exists:states,id',
+            'priority_id' => 'required|exists:priorities,id',
+            'assigned_to_id' => 'required|exists:users,id',
             'estimation' => 'required|min:1',
             'spent_time' => 'required|min:1',
         ]);
@@ -116,10 +110,10 @@ class TaskController extends Controller
         $request->validate([
             'name' => 'required|min:5',
             'description' => 'required|min:10',
-            'type_id' => 'required|min:1',
-            'state_id' => 'required|min:1',
-            'priority_id' => 'required|min:1',
-            'assigned_to_id' => 'required|min:1',
+            'type_id' => 'required|exists:types,id',
+            'state_id' => 'required|exists:states,id',
+            'priority_id' => 'required|exists:priorities,id',
+            'assigned_to_id' => 'required|exists:users,id',
             'estimation' => 'required|min:1',
             'spent_time' => 'required|min:1',
         ]);
