@@ -23,7 +23,7 @@ class StateController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
@@ -40,7 +40,7 @@ class StateController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\State  $state
+     * @param \App\Models\State $state
      * @return \Illuminate\Http\Response
      */
     public function edit(State $state)
@@ -51,8 +51,8 @@ class StateController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\State  $state
+     * @param \Illuminate\Http\Request $request
+     * @param \App\Models\State $state
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, State $state)
@@ -69,11 +69,15 @@ class StateController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\State  $state
+     * @param \App\Models\State $state
      * @return \Illuminate\Http\Response
      */
     public function destroy(State $state)
     {
+        if (State::all()->count() <= 1){
+            return redirect()->back();
+        }
+
         $state->delete();
 
         return redirect()->back();

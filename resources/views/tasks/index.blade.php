@@ -14,7 +14,8 @@
 
             <div class="card-body">
                 <div class="search mb-4 p-2">
-                    <form action="" method="GET">
+                    <form action="{{action('User\TaskController@search', $project)}}" method="POST">
+                        @csrf
                         <div class="form-group">
                             @component('components.input', [
                                 'labelName' => 'Search',
@@ -29,41 +30,34 @@
 
                 <div class="task-list">
                     @foreach($tasks as $key => $task)
-                        <div class="border-card">
-                            <div
-                                class="card-type-icon with-border {{$task->state->is_resolved ? 'bg-success' : 'bg-danger'}}">{{$key+1}}</div>
-                            <div class="content-wrapper">
-                                <div class="label-group fixed">
-                                    <p class="title">@lang('tasks.type')</p>
-                                    <p class="caption">{{$task->type->name}}</p>
+                        <a href="{{action('User\TaskController@show', [$project, $task])}}">
+                            <div class="border-card">
+                                <div
+                                    class="card-type-icon with-border {{$task->state->is_resolved ? 'bg-success' : 'bg-danger'}}">{{$key+1}}
                                 </div>
-                                <div class="min-gap"></div>
-                                <div class="label-group">
-                                    <p class="title">@lang('tasks.state')</p>
-                                    <p class="caption">{{$task->state->name}}</p>
-                                </div>
-                                <div class="min-gap"></div>
-                                <div class="label-group">
-                                    <p class="title">@lang('tasks.priority')</p>
-                                    <p class="caption">{{$task->priority->name}}</p>
-                                </div>
-                                <div class="min-gap"></div>
-                                <div class="label-group">
-                                    <p class="title">@lang('tasks.assigned')</p>
-                                    <p class="caption">{{$task->assigned->name}}</p>
+                                <div class="content-wrapper">
+                                    <div class="label-group fixed">
+                                        <p class="title">@lang('tasks.type')</p>
+                                        <p class="caption">{{$task->type->name}}</p>
+                                    </div>
+                                    <div class="min-gap"></div>
+                                    <div class="label-group">
+                                        <p class="title">@lang('tasks.state')</p>
+                                        <p class="caption">{{$task->state->name}}</p>
+                                    </div>
+                                    <div class="min-gap"></div>
+                                    <div class="label-group">
+                                        <p class="title">@lang('tasks.priority')</p>
+                                        <p class="caption">{{$task->priority->name}}</p>
+                                    </div>
+                                    <div class="min-gap"></div>
+                                    <div class="label-group">
+                                        <p class="title">@lang('tasks.assigned')</p>
+                                        <p class="caption">{{$task->assigned->name}}</p>
+                                    </div>
                                 </div>
                             </div>
-                            <div class="actions">
-                                <a href="{{action('User\TaskController@edit', [$project, $task])}}"
-                                   class="badge badge-primary badge-pill state-edit-btn">@lang('actions.edit')</a>
-                                <form action="{{action('User\TaskController@destroy', [$task->project, $task])}}" method="POST">
-                                    @csrf
-                                    @method('DELETE')
-                                    <button type="submit"
-                                            class="badge badge-danger badge-pill state-edit-btn">@lang('actions.del')</button>
-                                </form>
-                            </div>
-                        </div>
+                        </a>
                     @endforeach
                 </div>
             </div>

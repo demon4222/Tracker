@@ -24,11 +24,11 @@ class TaskController extends Controller
         return view('tasks.index', compact('tasks', 'project'));
     }
 
-    public function search(Project $project, $search)
+    public function search(Request $request, Project $project = null)
     {
-        $project->tasks()->where('name', 'like', "%$search%");
+        $tasks = isset($project) ? $project->tasks()->where('name', 'like', "%$request->search%")->paginate() : Task::paginate();
 
-        return view('tasks.index', compact('tasks'));
+        return view('tasks.index', compact('tasks', 'project'));
     }
 
     /**
@@ -38,6 +38,8 @@ class TaskController extends Controller
      */
     public function create(Project $project)
     {
+        $this->authorize('create', [Task::class, $project]);
+
         $types = Type::all();
         $states = State::all();
         $priorities = Priority::all();
@@ -53,6 +55,8 @@ class TaskController extends Controller
      */
     public function store(Request $request, Project $project)
     {
+        $this->authorize('create', [Task::class, $project]);
+
         $request->validate([
             'name' => 'required|min:5',
             'description' => 'required|min:10',
@@ -63,6 +67,7 @@ class TaskController extends Controller
             'estimation' => 'required|min:1',
             'spent_time' => 'required|min:1',
         ]);
+
         $values = $request->all();
         $values['project_id'] = $project->id;
         $values['creator_id'] = Auth()->user()->id;
@@ -78,24 +83,20 @@ class TaskController extends Controller
      * @param \App\Task $task
      * @return \Illuminate\Http\Response
      */
-    public function show(Task $task)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param \App\Task $task
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Project $project, Task $task)
+    public function show(Project $project, Task $task)
     {
         $types = Type::all();
         $states = State::all();
         $priorities = Priority::all();
 
-        return view('tasks.edit', compact('task', 'types', 'states', 'priorities', 'project'));
+        return view('tasks.show', compact('task', 'project', 'types', 'states', 'priorities'));
+    }
+
+    public function edit(Project $project, Task $task)
+    {
+        $this->authorize('update', $task);
+
+        return view('tasks.edit', compact('task', 'project'));
     }
 
     /**
@@ -107,16 +108,15 @@ class TaskController extends Controller
      */
     public function update(Request $request, Project $project, Task $task)
     {
+        $this->authorize('update', $task);
+
         $request->validate([
             'name' => 'required|min:5',
             'description' => 'required|min:10',
-            'type_id' => 'required|exists:types,id',
-            'state_id' => 'required|exists:states,id',
-            'priority_id' => 'required|exists:priorities,id',
-            'assigned_to_id' => 'required|exists:users,id',
             'estimation' => 'required|min:1',
             'spent_time' => 'required|min:1',
         ]);
+
         $values = $request->all();
 
         $task->update($values);
@@ -132,8 +132,20 @@ class TaskController extends Controller
      */
     public function destroy(Project $project, Task $task)
     {
+        $this->authorize('delete', $task);
+
         $task->delete();
 
-        return redirect()->back();
+        return redirect()->action('User\TaskController@index', $project);
+    }
+
+    public function changeType(Request $request, Task $task)
+    {
+        $task->update($request->only('type_id'));
+    }
+
+    public function changePriority(Request $request, Task $task)
+    {
+        $task->update($request->only('priority_id'));
     }
 }

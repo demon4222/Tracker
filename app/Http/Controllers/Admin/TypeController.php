@@ -74,6 +74,10 @@ class TypeController extends Controller
      */
     public function destroy(Type $type)
     {
+        if (Type::all()->count() <= 1){
+            return redirect()->back();
+        }
+
         $type->delete();
 
         return redirect()->back();

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Models\Priority;
+use App\Models\Task;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
@@ -76,7 +77,15 @@ class PriorityController extends Controller
      */
     public function destroy(Priority $priority)
     {
+        if (Priority::all()->count() <= 1){
+            return redirect()->back();
+        }
+
         $priority->delete();
+
+        $minPriorityId = Priority::orderBy('weight')->firstOrFail()->id;
+
+        Task::where('priority_id', $priority->id)->update(['priority_id' => $minPriorityId]);
 
         return redirect()->back();
     }

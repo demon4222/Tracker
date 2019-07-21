@@ -1,0 +1,30 @@
+.desc, .options {
+    border: 1px solid #D1D1D1;
+    border-radius: 5px;
+}
+
+.options > ul > li > select {
+    width: 100px;
+}
+
+.desc {
+    position: relative;
+}
+
+.description{
+    border: 1px solid #D1D1D1;
+    border-radius: 5px;
+}
+
+.add, .actions {
+    position: absolute;
+    bottom: 0;
+}
+
+.add > label{
+    display: block;
+}
+
+.actions {
+    right: 0;
+}
