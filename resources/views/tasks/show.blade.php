@@ -50,7 +50,13 @@
                         </li>
                         <li class="list-group-item d-flex justify-content-between align-items-center">
                             @lang('tasks.state')
-                            <span class="badge badge-primary badge-pill">{{$task->state->name}}</span>
+                            @component('components.select',[
+                                'name' => 'state_id',
+                                'id' => 'state_select',
+                                'options' => $states,
+                                'value' => $task->state->id
+                            ])
+                            @endcomponent
                         </li>
                         <li class="list-group-item d-flex justify-content-between align-items-center">
                             @lang('tasks.priority')

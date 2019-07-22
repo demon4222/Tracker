@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Models\State;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 
 class StateController extends Controller
 {
@@ -32,7 +33,12 @@ class StateController extends Controller
             'name' => 'required'
         ]);
 
-        State::create($request->only('name'));
+        if($request->get('is_resolved')){
+            State::create(['name' => $request->name, 'is_resolved' => 1]);
+        }
+        else {
+            State::create($request->only('name'));
+        }
 
         return redirect()->back();
     }
@@ -61,7 +67,12 @@ class StateController extends Controller
             'name' => 'required'
         ]);
 
-        $state->update($request->only('name'));
+        if($request->get('is_resolved')) {
+            $state->update(['name' => $request->name, 'is_resolved' => 1]);
+        }
+        else {
+            $state->update($request->only('name'));
+        }
 
         return redirect()->back();
     }
@@ -74,8 +85,8 @@ class StateController extends Controller
      */
     public function destroy(State $state)
     {
-        if (State::all()->count() <= 1){
-            return redirect()->back();
+        if (State::count() <= 1){
+            throw new BadRequestHttpException("The last one state.");
         }
 
         $state->delete();

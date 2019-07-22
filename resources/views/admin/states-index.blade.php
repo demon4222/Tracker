@@ -23,6 +23,7 @@
                             'type' => 'text'
                         ])
                         @endcomponent
+                        <p><input type="checkbox" name="is_resolved">is resolved</p>
                         <button type="submit" class="btn btn-primary btn-sm mt-2">@lang('actions.add')</button>
                     </div>
                 </form>
@@ -39,7 +40,8 @@
                             <form action="{{action('Admin\StateController@destroy', $state)}}" method="POST">
                                 @csrf
                                 @method('DELETE')
-                                <button class="badge badge-danger badge-pill">@lang('actions.del')</button>
+                                <button
+                                    {{$states->count() == 1 ? 'disabled title=Last' : ''}} class="badge badge-danger badge-pill">@lang('actions.del')</button>
                             </form>
                         </div>
                     </li>

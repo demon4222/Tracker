@@ -39,7 +39,8 @@
                             <form action="{{action('Admin\TypeController@destroy', $type)}}" method="POST">
                                 @csrf
                                 @method('DELETE')
-                                <button class="badge badge-danger badge-pill">@lang('actions.del')</button>
+                                <button
+                                    {{$types->count() == 1 ? 'disabled title=Last' : ''}} class="badge badge-danger badge-pill">@lang('actions.del')</button>
                             </form>
                         </div>
                     </li>

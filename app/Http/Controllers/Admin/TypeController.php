@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Models\Type;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 
 class TypeController extends Controller
 {
@@ -74,8 +75,8 @@ class TypeController extends Controller
      */
     public function destroy(Type $type)
     {
-        if (Type::all()->count() <= 1){
-            return redirect()->back();
+        if (Type::count() <= 1){
+            throw new BadRequestHttpException("The last one type.");
         }
 
         $type->delete();

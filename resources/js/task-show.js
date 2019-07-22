@@ -36,4 +36,22 @@ $(document).ready(function () {
             }
         });
     })
+
+    $('#state_select').on('change', function () {
+        let stateId = $(this).val();
+        let task = $('#task_id').val();
+        $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name = "csrf-token"]').attr('content')
+            }
+        });
+        $.ajax({
+            type: 'POST',
+            url: '/tasks/' + task + '/changeState/',
+            data: {state_id: stateId},
+            success: function (data) {
+                alert('Successfully changed!');
+            }
+        });
+    })
 })

@@ -26,7 +26,16 @@ class TaskController extends Controller
 
     public function search(Request $request, Project $project = null)
     {
-        $tasks = isset($project) ? $project->tasks()->where('name', 'like', "%$request->search%")->paginate() : Task::paginate();
+        $query = Task::query();
+
+        if($project) {
+            $query->whereProjectId($project->id);
+        }
+
+        if($search = $request->get('search')) {
+            $query->where('name', 'like', "%{$search}%");
+        }
+        dd($query->paginate());
 
         return view('tasks.index', compact('tasks', 'project'));
     }
@@ -142,6 +151,11 @@ class TaskController extends Controller
     public function changeType(Request $request, Task $task)
     {
         $task->update($request->only('type_id'));
+    }
+
+    public function changeState(Request $request, Task $task)
+    {
+        $task->update($request->only('state_id'));
     }
 
     public function changePriority(Request $request, Task $task)
