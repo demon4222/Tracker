@@ -3,8 +3,10 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Models\Priority;
+use App\Models\Task;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 
 class PriorityController extends Controller
 {
@@ -76,7 +78,15 @@ class PriorityController extends Controller
      */
     public function destroy(Priority $priority)
     {
+        if (Priority::count() <= 1){
+            throw new BadRequestHttpException("The last one priority");
+        }
+
         $priority->delete();
+
+        $minPriorityId = Priority::orderBy('weight')->firstOrFail()->id;
+
+        Task::where('priority_id', $priority->id)->update(['priority_id' => $minPriorityId]);
 
         return redirect()->back();
     }

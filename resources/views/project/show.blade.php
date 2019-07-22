@@ -39,7 +39,10 @@
                             <a href="{{action('User\ProjectController@edit', $project)}}"
                                class="btn btn-primary my-2">@lang('actions.edit')</a>
                         @endcan
-                        <a href="{{action('User\TaskController@create', $project)}}" class="btn btn-success mt-2">@lang('tasks.new')</a>
+                        @can('create',[\App\Models\Task::class, $project])
+                            <a href="{{action('User\TaskController@create', $project)}}"
+                               class="btn btn-success mt-2">@lang('tasks.new')</a>
+                        @endcan
                     </div>
                 </div>
             </div>

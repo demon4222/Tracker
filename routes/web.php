@@ -51,6 +51,11 @@ Route::group(['middleware' => 'auth'], function () {
             Route::get('/members', 'ProjectController@members');
 
             Route::resource('/tasks', 'TaskController');
+
+            Route::post('/tasks/search', 'TaskController@search');
         });
+        Route::post('/tasks/{task}/changeType', 'TaskController@changeType');
+        Route::post('/tasks/{task}/changeState', 'TaskController@changeState');
+        Route::post('/tasks/{task}/changePriority', 'TaskController@changePriority');
     });
 });

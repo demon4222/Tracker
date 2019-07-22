@@ -21,36 +21,6 @@
                     @endcomponent
                 </div>
                 <div class="form-group">
-                    @component('components.select', [
-                        'label' => __('tasks.type'),
-                        'name' => 'type_id',
-                        'id' => 'select_type',
-                        'value' => $task->type->id,
-                        'options' => $types,
-                    ])
-                    @endcomponent
-                </div>
-                <div class="form-group">
-                    @component('components.select', [
-                        'label' => __('tasks.state'),
-                        'name' => 'state_id',
-                        'id' => 'select_state',
-                        'value' => $task->state->id,
-                        'options' => $priorities,
-                    ])
-                    @endcomponent
-                </div>
-                <div class="form-group">
-                    @component('components.select', [
-                        'label' => __('tasks.priority'),
-                        'name' => 'priority_id',
-                        'id' => 'select_priority',
-                        'value' => $task->priority->id,
-                        'options' => $priorities,
-                    ])
-                    @endcomponent
-                </div>
-                <div class="form-group">
                     @component('components.input',[
                         'labelName' => __('tasks.est'),
                         'name' => 'estimation',
@@ -73,16 +43,6 @@
                         'labelName' => __('tasks.desc'),
                         'name' => 'description',
                         'value' => $task->description
-                    ])
-                    @endcomponent
-                </div>
-                <div class="form-group">
-                    @component('components.select', [
-                        'label' => __('project.members'),
-                        'name' => 'assigned_to_id',
-                        'id' => 'select_assigned',
-                        'value' => $task->assigned->id,
-                        'options' => \App\User::all(),
                     ])
                     @endcomponent
                 </div>

@@ -18,7 +18,7 @@ class ProjectController extends Controller
 
     public function removeUserFromProject(Project $project, $userId)
     {
-        $this->authorize('removeUser', $project, $userId);
+        $this->authorize('removeUser', $project);
 
         if (!$project->projectUser()->whereUserId($userId)->first()->user->is_admin) {
             $project->projectUser()->whereUserId($userId)->delete();
@@ -29,7 +29,7 @@ class ProjectController extends Controller
 
     public function addUser(Project $project, $userId)
     {
-        $this->authorize('addUser', $project, $userId);
+        $this->authorize('addUser', $project);
 
         $project->projectUser()->firstOrCreate(['project_id' => $project->id, 'user_id' => $userId, 'role' => User::ROLE_DEVELOPER]);
 
@@ -38,7 +38,7 @@ class ProjectController extends Controller
 
     public function changeUserRole(Request $request, Project $project, $userId)
     {
-        $this->authorize('changeUserRole', $project, $userId);
+        $this->authorize('changeUserRole', $project);
 
         $request->validate([
             'role' => 'required'
@@ -59,7 +59,7 @@ class ProjectController extends Controller
 
     public function update(Request $request, Project $project)
     {
-        $this->authorize('update', $project, Auth()->user());
+        $this->authorize('update', $project);
 
         $request->validate([
             'name' => 'required|min:5',

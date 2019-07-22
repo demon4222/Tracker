@@ -38,11 +38,11 @@
                         <div class="actions">
                             <a href="{{action('Admin\PriorityController@edit', $priority)}}"
                                class="badge badge-primary badge-pill state-edit-btn">@lang('actions.edit')</a>
-                            <form action="{{action('Admin\PriorityController@destroy', $priority)}}" method="POST">
-                                @csrf
-                                @method('DELETE')
-                                <button class="badge badge-danger badge-pill">@lang('actions.del')</button>
-                            </form>
+                                <form action="{{action('Admin\PriorityController@destroy', $priority)}}" method="POST">
+                                    @csrf
+                                    @method('DELETE')
+                                    <button {{$priorities->count() == 1 ? 'disabled title=Last' : ''}}  class="badge badge-danger badge-pill">@lang('actions.del')</button>
+                                </form>
                         </div>
                     </li>
                 @endforeach

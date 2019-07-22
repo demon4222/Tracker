@@ -9,6 +9,7 @@ return [
     'state' => 'Task state',
     'type' => 'Task type',
     'priority' => 'Task priority',
+    'creator' => 'Task creator',
     'assigned' => 'Assigned task to',
     'est' => 'Estimation',
     'time' => 'Spent time'

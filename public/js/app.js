@@ -49403,10 +49403,21 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "./resources/sass/tasks/show.scss":
+/*!****************************************!*\
+  !*** ./resources/sass/tasks/show.scss ***!
+  \****************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+// removed by extract-text-webpack-plugin
+
+/***/ }),
+
 /***/ 0:
-/*!************************************************************************************************************************************************************************************************************!*\
-  !*** multi ./resources/js/app.js ./resources/sass/project/index.scss ./resources/sass/project/show.scss ./resources/sass/project/members.scss ./resources/sass/tasks/index.scss ./resources/sass/app.scss ***!
-  \************************************************************************************************************************************************************************************************************/
+/*!*********************************************************************************************************************************************************************************************************************************************!*\
+  !*** multi ./resources/js/app.js ./resources/sass/project/index.scss ./resources/sass/project/show.scss ./resources/sass/project/members.scss ./resources/sass/tasks/index.scss ./resources/sass/tasks/show.scss ./resources/sass/app.scss ***!
+  \*********************************************************************************************************************************************************************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -49415,6 +49426,7 @@ __webpack_require__(/*! C:\xampp\htdocs\Tracker\resources\sass\project\index.scs
 __webpack_require__(/*! C:\xampp\htdocs\Tracker\resources\sass\project\show.scss */"./resources/sass/project/show.scss");
 __webpack_require__(/*! C:\xampp\htdocs\Tracker\resources\sass\project\members.scss */"./resources/sass/project/members.scss");
 __webpack_require__(/*! C:\xampp\htdocs\Tracker\resources\sass\tasks\index.scss */"./resources/sass/tasks/index.scss");
+__webpack_require__(/*! C:\xampp\htdocs\Tracker\resources\sass\tasks\show.scss */"./resources/sass/tasks/show.scss");
 module.exports = __webpack_require__(/*! C:\xampp\htdocs\Tracker\resources\sass\app.scss */"./resources/sass/app.scss");
 
 
