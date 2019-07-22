@@ -57,5 +57,11 @@ Route::group(['middleware' => 'auth'], function () {
         Route::post('/tasks/{task}/changeType', 'TaskController@changeType');
         Route::post('/tasks/{task}/changeState', 'TaskController@changeState');
         Route::post('/tasks/{task}/changePriority', 'TaskController@changePriority');
+        Route::post('/tasks/{task}/changeAssigned', 'TaskController@changeAssigned');
+
+        Route::post('/tasks/{task}/addComment', 'CommentController@store');
+        Route::delete('/comments/{comment}/delete', 'CommentController@destroy');
+        Route::put('/comments/{comment}/update', 'CommentController@update');
+        Route::get('/comments/{comment}/edit', 'CommentController@edit');
     });
 });

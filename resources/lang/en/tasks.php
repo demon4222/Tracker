@@ -12,6 +12,7 @@ return [
     'creator' => 'Task creator',
     'assigned' => 'Assigned task to',
     'est' => 'Estimation',
-    'time' => 'Spent time'
+    'time' => 'Spent time',
+    'comments' => 'Task commentaries'
 
 ];

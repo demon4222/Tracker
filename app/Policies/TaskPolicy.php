@@ -119,4 +119,24 @@ class TaskPolicy
     {
         //
     }
+
+    public function changeType(User $user, Task $task)
+    {
+        return $this->isProjectAdmin($user, $task);
+    }
+
+    public function changeState(User $user, Task $task)
+    {
+        return $this->isProjectAdmin($user, $task);
+    }
+
+    public function changePriority(User $user, Task $task)
+    {
+        return $this->isProjectAdmin($user, $task);
+    }
+
+    public function changeAssigned(User $user, Task $task)
+    {
+        return $this->isProjectAdmin($user, $task);
+    }
 }

@@ -54,4 +54,63 @@ $(document).ready(function () {
             }
         });
     })
+
+    $('#assigned_select').on('change', function () {
+        let assignedId = $(this).val();
+        let task = $('#task_id').val();
+        $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name = "csrf-token"]').attr('content')
+            }
+        });
+        $.ajax({
+            type: 'POST',
+            url: '/tasks/' + task + '/changeAssigned/',
+            data: {assigned_to_id: assignedId},
+            success: function (data) {
+                alert('Successfully changed!');
+            }
+        });
+    })
+
+    $('#add-comment').on('click', function () {
+        $('.add-comment-field').toggle();
+    })
+
+    $("#add-comment-form").submit(function (e) {
+        e.preventDefault();
+        var $form = $(this);
+        $.ajax({
+            type: $form.attr('method'),
+            url: $form.attr('action'),
+            data: $form.serialize()
+        }).done(function (data) {
+            let $newCommBlock = data;
+            $('.all-comments').append($newCommBlock);
+            $newCommBlock = $('.description').last();
+            $newCommBlock.find('#edit-comment').on('click', function () {
+                $(this).attr('disabled', 'disabled');
+                let $block = $(this).parent().parent().find('.comment-text');
+                let $text = $(this).parent().parent().find('#comment-text');
+                $text.remove();
+                let comment = $(this).parent().parent().find('#comment-id').val();
+                $block.load('/comments/' + comment + '/edit');
+            })
+        }).fail(function (data) {
+            console.log(data);
+        });
+
+        $('.add-comment-field').toggle();
+    })
+
+    $('*[id*=edit-comment]:visible').each(function () {
+        $(this).on('click', function () {
+            $(this).attr('disabled', 'disabled');
+            let $block = $(this).parent().parent().find('.comment-text');
+            let $text = $(this).parent().parent().find('#comment-text');
+            $text.remove();
+            let comment = $(this).parent().parent().find('#comment-id').val();
+            $block.load('/comments/' + comment + '/edit');
+        })
+    });
 })

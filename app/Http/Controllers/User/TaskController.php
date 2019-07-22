@@ -10,6 +10,8 @@ use App\Models\Type;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
+use App\User;
+
 class TaskController extends Controller
 {
     /**
@@ -150,16 +152,29 @@ class TaskController extends Controller
 
     public function changeType(Request $request, Task $task)
     {
+        $this->authorize('changeType', $task);
+
         $task->update($request->only('type_id'));
     }
 
     public function changeState(Request $request, Task $task)
     {
+        $this->authorize('changeState', $task);
+
         $task->update($request->only('state_id'));
     }
 
     public function changePriority(Request $request, Task $task)
     {
+        $this->authorize('changePriority', $task);
+
         $task->update($request->only('priority_id'));
+    }
+
+    public function changeAssigned(Request $request, Task $task)
+    {
+        $this->authorize('changeAssigned', $task);
+
+        $task->update($request->only('assigned_to_id'));
     }
 }
