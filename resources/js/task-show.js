@@ -87,6 +87,15 @@ $(document).ready(function () {
         }).done(function (data) {
             let $newCommBlock = data;
             $('.all-comments').append($newCommBlock);
+            $newCommBlock = $('.description').last();
+            $newCommBlock.find('#edit-comment').on('click', function () {
+                $(this).attr('disabled', 'disabled');
+                let $block = $(this).parent().parent().find('.comment-text');
+                let $text = $(this).parent().parent().find('#comment-text');
+                $text.remove();
+                let comment = $(this).parent().parent().find('#comment-id').val();
+                $block.load('/comments/' + comment + '/edit');
+            })
         }).fail(function (data) {
             console.log(data);
         });
