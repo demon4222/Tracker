@@ -107,7 +107,9 @@
                         @foreach($task->comments as $comment)
                             <div class="description comment mt-2 p-2">
                                 <input type="hidden" id="comment-id" value="{{$comment->id}}">
-                                <p id="comment-text">{{$comment->text}}</p>
+                                <div class="comment-text">
+                                    <p id="comment-text">{{$comment->text}}</p>
+                                </div>
                                 <div class="author text-right">
                                     <p class="mb-0 font-italic">{{$comment->user->name}}</p>
                                 </div>

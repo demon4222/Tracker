@@ -62,5 +62,6 @@ Route::group(['middleware' => 'auth'], function () {
         Route::post('/tasks/{task}/addComment', 'CommentController@store');
         Route::delete('/comments/{comment}/delete', 'CommentController@destroy');
         Route::put('/comments/{comment}/update', 'CommentController@update');
+        Route::get('/comments/{comment}/edit', 'CommentController@edit');
     });
 });
