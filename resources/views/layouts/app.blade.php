@@ -11,9 +11,9 @@
 
     <!-- Scripts -->
     <script src="{{ asset('js/app.js') }}" defer></script>
-    @stack('scripts')
+@stack('scripts')
 
-    <!-- Fonts -->
+<!-- Fonts -->
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet">
 
@@ -42,7 +42,14 @@
 
                 <!-- Right Side Of Navbar -->
                 <ul class="navbar-nav ml-auto">
-                    <!-- Authentication Links -->
+                    @auth
+                        @if(Auth()->user()->is_admin)
+                            <li class="nav-item">
+                                <a class="nav-link" href="{{action('Admin\AdminController@index')}}">Panel</a>
+                            </li>
+                        @endif
+                    @endauth
+                <!-- Authentication Links -->
                     @guest
                         <li class="nav-item">
                             <a class="nav-link" href="{{ route('login') }}">{{ __('Login') }}</a>

@@ -70,8 +70,9 @@ class TypeController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\Type  $type
+     * @param \App\Models\Type $type
      * @return \Illuminate\Http\Response
+     * @throws \Exception
      */
     public function destroy(Type $type)
     {

@@ -40,7 +40,7 @@
                                 @csrf
                                 @method('DELETE')
                                 <button
-                                    {{$types->count() == 1 ? 'disabled title=Last' : ''}} class="badge badge-danger badge-pill">@lang('actions.del')</button>
+                                    {{$types->count() == 1 ? 'disabled title=Last' : ''}} class="badge badge-danger badge-pill">@lang('actions.delete')</button>
                             </form>
                         </div>
                     </li>

@@ -14,7 +14,7 @@
                 @csrf
                 @method('DELETE')
                 <button id="del-comment" type="submit"
-                        class="btn btn-danger btn-sm"> @lang('actions.del')</button>
+                        class="btn btn-danger btn-sm"> @lang('actions.delete')</button>
             </form>
             @can('update', $comment)
                 <button id="edit-comment"

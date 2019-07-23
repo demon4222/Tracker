@@ -41,7 +41,7 @@
                                 <form action="{{action('Admin\PriorityController@destroy', $priority)}}" method="POST">
                                     @csrf
                                     @method('DELETE')
-                                    <button {{$priorities->count() == 1 ? 'disabled title=Last' : ''}}  class="badge badge-danger badge-pill">@lang('actions.del')</button>
+                                    <button {{$priorities->count() == 1 ? 'disabled title=Last' : ''}}  class="badge badge-danger badge-pill">@lang('actions.delete')</button>
                                 </form>
                         </div>
                     </li>

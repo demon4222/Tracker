@@ -4,9 +4,12 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use App\User;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Task extends Model
 {
+    use SoftDeletes;
+
     protected $fillable = ['project_id', 'parent_id', 'creator_id', 'assigned_to_id', 'name', 'description', 'type_id', 'state_id', 'priority_id', 'estimation', 'spent_time'];
 
     public function project()
@@ -42,5 +45,10 @@ class Task extends Model
     public function comments()
     {
         return $this->hasMany(Comment::class);
+    }
+
+    public function logs()
+    {
+        return $this->hasMany(TaskLog::class);
     }
 }

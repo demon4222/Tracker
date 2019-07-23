@@ -25,6 +25,7 @@ class ProjectController extends Controller
      * Show the form for creating a new resource.
      *
      * @return \Illuminate\Http\Response
+     * @throws \Illuminate\Auth\Access\AuthorizationException
      */
     public function create()
     {
@@ -57,6 +58,7 @@ class ProjectController extends Controller
      *
      * @param Project $project
      * @return void
+     * @throws \Exception
      */
     public function destroy(Project $project)
     {

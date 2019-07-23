@@ -64,7 +64,7 @@
                                     @method('DELETE')
                                     <div class="remove-btn">
                                         <button type="submit"
-                                                class="btn btn-sm btn-danger">@lang('actions.del')</button>
+                                                class="btn btn-sm btn-danger">@lang('actions.delete')</button>
                                     </div>
                                 </form>
                             @endcan

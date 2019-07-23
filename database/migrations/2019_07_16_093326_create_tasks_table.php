@@ -28,6 +28,7 @@ class CreateTasksTable extends Migration
             $table->integer('spent_time')->unsigned();
             $table->boolean('is_done')->nullable();
             $table->timestamps();
+            $table->softDeletes();
 
             $table->foreign('parent_id')->references('id')->on('tasks')->onDelete('cascade');
             $table->foreign('project_id')->references('id')->on('projects')->onDelete('restrict');

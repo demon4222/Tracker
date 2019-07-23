@@ -13,6 +13,8 @@ return [
     'assigned' => 'Assigned task to',
     'est' => 'Estimation',
     'time' => 'Spent time',
-    'comments' => 'Task commentaries'
+    'comments' => 'Task commentaries',
+    'history' => 'Task history',
+
 
 ];

@@ -73,8 +73,9 @@ class PriorityController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\Priority  $priority
+     * @param \App\Models\Priority $priority
      * @return \Illuminate\Http\Response
+     * @throws \Exception
      */
     public function destroy(Priority $priority)
     {
