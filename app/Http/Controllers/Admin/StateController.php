@@ -82,6 +82,7 @@ class StateController extends Controller
      *
      * @param \App\Models\State $state
      * @return \Illuminate\Http\Response
+     * @throws \Exception
      */
     public function destroy(State $state)
     {

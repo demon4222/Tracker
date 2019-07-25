@@ -28,7 +28,7 @@
                         <a href="{{action('User\ProjectController@show', $project)}}">{{$project->name}}</a>
                     </td>
                     <td>{{$project->users->count()}}</td>
-                    <td class="text-center">a</td>
+                    <td class="text-center">{{$project->tasks->count()}}</td>
                 </tr>
             @endforeach
             </tbody>

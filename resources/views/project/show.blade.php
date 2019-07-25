@@ -32,7 +32,7 @@
                                   method="POST">
                                 @csrf
                                 @method('delete')
-                                <input type="submit" class="btn btn-danger" value="@lang('actions.del')">
+                                <input type="submit" class="btn btn-danger" value="@lang('actions.delete')">
                             </form>
                         @endif
                         @can('update', $project)

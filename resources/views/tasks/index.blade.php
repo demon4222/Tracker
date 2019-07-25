@@ -32,10 +32,14 @@
                     @foreach($tasks as $key => $task)
                         <a href="{{action('User\TaskController@show', [$project, $task])}}">
                             <div class="border-card">
-                                <div
+                                <div title="{{$task->state->is_resolved ? 'resolved' : 'not resolved'}}"
                                     class="card-type-icon with-border {{$task->state->is_resolved ? 'bg-success' : 'bg-danger'}}">{{$key+1}}
                                 </div>
                                 <div class="content-wrapper">
+                                    <div class="label-group fixed mr-4">
+                                        <p class="title">@lang('tasks.name')</p>
+                                        <p class="caption">{{$task->name}}</p>
+                                    </div>
                                     <div class="label-group fixed">
                                         <p class="title">@lang('tasks.type')</p>
                                         <p class="caption">{{$task->type->name}}</p>
@@ -59,6 +63,9 @@
                             </div>
                         </a>
                     @endforeach
+                </div>
+                <div class="text-center">
+                    {{$tasks->links()}}
                 </div>
             </div>
         </div>

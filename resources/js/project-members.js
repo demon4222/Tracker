@@ -16,6 +16,7 @@ $(document).ready(function () {
             data: {role: role},
             success: function (data) {
                 alert('Role was changed successful!');
+                location.reload();
             },
             error: function (data) {
                 console.log("error: ", data);

@@ -2,8 +2,8 @@
 
 return [
 
-    'act' => 'Action',
-    'del' => 'Delete',
+    'action' => 'Action',
+    'delete' => 'Delete',
     'edit' => 'Edit',
     'create' => 'Create',
     'add' => 'Add',

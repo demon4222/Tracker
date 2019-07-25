@@ -2,8 +2,12 @@
 
 namespace App\Providers;
 
+use App\Models\Comment;
 use App\Models\Project;
 use App\Models\ProjectUser;
+use App\Models\Task;
+use App\Observers\CommentObserver;
+use App\Observers\TaskObserver;
 use App\User;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Facades\Schema;
@@ -29,5 +33,7 @@ class AppServiceProvider extends ServiceProvider
     public function boot()
     {
         Schema::defaultStringLength(191);
+        Task::observe(TaskObserver::class);
+        Comment::observe(CommentObserver::class);
     }
 }

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\User;
 
+use App\Events\TaskAssignedChanged;
 use App\Models\Priority;
 use App\Models\Project;
 use App\Models\State;
@@ -10,12 +11,11 @@ use App\Models\Type;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
-use App\User;
-
 class TaskController extends Controller
 {
     /**
      * Display a listing of the resource.
+     * @param Project $project
      *
      * @return \Illuminate\Http\Response
      */
@@ -45,7 +45,9 @@ class TaskController extends Controller
     /**
      * Show the form for creating a new resource.
      *
+     * @param Project $project
      * @return \Illuminate\Http\Response
+     * @throws \Illuminate\Auth\Access\AuthorizationException
      */
     public function create(Project $project)
     {
@@ -62,7 +64,9 @@ class TaskController extends Controller
      * Store a newly created resource in storage.
      *
      * @param \Illuminate\Http\Request $request
+     * @param Project $project
      * @return \Illuminate\Http\Response
+     * @throws \Illuminate\Auth\Access\AuthorizationException
      */
     public function store(Request $request, Project $project)
     {
@@ -91,8 +95,9 @@ class TaskController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param \App\Task $task
-     * @return \Illuminate\Http\Response
+     * @param Project $project
+     * @param Task $task
+     * @return Response
      */
     public function show(Project $project, Task $task)
     {
@@ -113,9 +118,11 @@ class TaskController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param \Illuminate\Http\Request $request
-     * @param \App\Task $task
-     * @return \Illuminate\Http\Response
+     * @param Request $request
+     * @param Project $project
+     * @param Task $task
+     * @return Response
+     * @throws \Illuminate\Auth\Access\AuthorizationException
      */
     public function update(Request $request, Project $project, Task $task)
     {
@@ -138,8 +145,10 @@ class TaskController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param \App\Task $task
+     * @param Project $project
+     * @param Task $task
      * @return \Illuminate\Http\Response
+     * @throws \Illuminate\Auth\Access\AuthorizationException
      */
     public function destroy(Project $project, Task $task)
     {
@@ -171,10 +180,17 @@ class TaskController extends Controller
         $task->update($request->only('priority_id'));
     }
 
+    /**
+     * @param Request $request
+     * @param Task $task
+     * @throws \Illuminate\Auth\Access\AuthorizationException
+     */
     public function changeAssigned(Request $request, Task $task)
     {
         $this->authorize('changeAssigned', $task);
 
         $task->update($request->only('assigned_to_id'));
+
+        event(new TaskAssignedChanged($task));
     }
 }

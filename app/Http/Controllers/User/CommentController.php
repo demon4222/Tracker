@@ -4,6 +4,7 @@ namespace App\Http\Controllers\User;
 
 use App\Models\Comment;
 use App\Models\Task;
+use App\Notifications\CommentAdded;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
@@ -12,8 +13,10 @@ class CommentController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param \Illuminate\Http\Request $request
+     * @param Task $task
      * @return \Illuminate\Http\Response
+     * @throws \Illuminate\Auth\Access\AuthorizationException
      */
     public function store(Request $request, Task $task)
     {
@@ -31,7 +34,7 @@ class CommentController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\Comment  $comment
+     * @param  Comment  $comment
      * @return \Illuminate\Http\Response
      */
     public function edit(Comment $comment)
@@ -42,9 +45,10 @@ class CommentController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Comment  $comment
+     * @param \Illuminate\Http\Request $request
+     * @param \App\Models\Comment $comment
      * @return \Illuminate\Http\Response
+     * @throws \Illuminate\Auth\Access\AuthorizationException
      */
     public function update(Request $request, Comment $comment)
     {
@@ -62,12 +66,13 @@ class CommentController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\Comment  $comment
+     * @param \App\Models\Comment $comment
      * @return \Illuminate\Http\Response
+     * @throws \Illuminate\Auth\Access\AuthorizationException
      */
     public function destroy(Comment $comment)
     {
-        $this->authorize('update', $comment);
+        $this->authorize('delete', $comment);
 
         $comment->delete();
 

@@ -121,7 +121,7 @@
                                             @csrf
                                             @method('DELETE')
                                             <button id="del-comment" type="submit"
-                                                    class="btn btn-danger btn-sm"> @lang('actions.del')</button>
+                                                    class="btn btn-danger btn-sm"> @lang('actions.delete')</button>
                                         </form>
                                         @can('update', $comment)
                                             <button id="edit-comment"
@@ -132,6 +132,7 @@
                             </div>
                         @endforeach
                     </div>
+
                     <div class="add-comment-field mt-2" style="display: none">
                         <form id="add-comment-form" action="{{action('User\CommentController@store', $task)}}"
                               method="POST">
@@ -150,6 +151,18 @@
                         @endcan
                     </div>
                 </div>
+
+                <div class="col-4 options desc p-3 mt-3">
+                    <h5 class="pl-2"><u>@lang('tasks.history')</u></h5>
+
+                    <div class="description mt-4 p-2">
+                        <p>{{$task->description}}</p>
+                        <div class="text-right">
+                            <p class="mb-0 font-italic">22.11.2019</p>
+                        </div>
+                    </div>
+                </div>
+
             </div>
             @can('delete', $task)
                 <div class="mt-2 text-right">
@@ -158,7 +171,7 @@
                         @csrf
                         @method('DELETE')
                         <button type="submit"
-                                class="btn btn-sm btn-danger">@lang('actions.del')</button>
+                                class="btn btn-sm btn-danger">@lang('actions.delete')</button>
                     </form>
                 </div>
             @endcan
